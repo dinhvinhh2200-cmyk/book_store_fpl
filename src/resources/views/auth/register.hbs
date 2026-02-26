@@ -1,0 +1,118 @@
+<style>
+  /* Nền trang đăng ký */
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Thêm màu nền nhẹ để nổi bật card */
+}
+
+.auth-container {
+    max-width: 450px;
+    margin: 80px auto;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+}
+
+.auth-title {
+    font-weight: 800;
+    color: #2d3436;
+    text-align: center;
+    margin-bottom: 40px; /* Tăng khoảng cách dưới tiêu đề */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.auth-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #ff9800;
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* TẠO KHOẢNG TRỐNG GIỮA LABEL VÀ INPUT */
+.mb-3 {
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-bottom: 20px !important; /* Khoảng cách giữa các dòng */
+}
+
+.form-label {
+    flex: 0 0 70px; /* Cố định độ rộng nhãn là 100px */
+    font-weight: 600;
+    color: #636e72;
+    margin-bottom: 0; /* Bỏ margin bottom mặc định */
+    margin-right: 15px; /* Khoảng cách từ chữ đến ô input */
+}
+
+.form-control {
+    flex: 1; /* Để input tự động chiếm phần còn lại */
+    border-radius: 12px;
+    padding: 12px 20px;
+    border: 1px solid #dfe6e9;
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #ff9800;
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+}
+
+.btn-auth {
+    background: #ff9800;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    margin-top: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.btn-auth:hover {
+    background: #e68a00;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 15px rgba(255, 152, 0, 0.2);
+}
+
+.text-center a {
+    color: #6200ea; /* Màu tím như trong hình mẫu bạn gửi */
+    text-decoration: none;
+    font-weight: 600;
+}
+</style>
+
+<div class="container">
+    <div class="auth-container">
+        <h2 class="auth-title">ĐĂNG KÝ</h2>
+
+        {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+        {{/if}}
+
+        <form action="/auth/register" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Họ tên</label>
+                <input type="text" name="name" class="form-control" placeholder="Nhập tên của bạn" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" placeholder="example@gmail.com" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" name="password" class="form-control" placeholder="Tối thiểu 6 ký tự" required>
+            </div>
+            <button type="submit" class="btn-auth">TẠO TÀI KHOẢN</button>
+            <p class="text-center mt-3">Đã có tài khoản? <a href="/auth/login">Đăng nhập</a></p>
+        </form>
+    </div>
+</div>

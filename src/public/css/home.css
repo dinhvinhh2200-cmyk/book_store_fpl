@@ -1,0 +1,154 @@
+:root {
+    --primary-color: #ff9800;
+    --text-main: #333;
+    --text-light: #777;
+    --bg-card: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+.home-content {
+    padding-bottom: 50px;
+}
+
+.section-title {
+    text-align: center;
+    margin: 40px 0;
+    font-size: 2rem;
+    color: var(--text-main);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Cấu trúc Grid tự động thích ứng màn hình */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Card sách */
+.book-card {
+    background: var(--bg-card);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eee;
+}
+
+.book-card:hover {
+    transform: translateY(-10px); /* Nhấc nhẹ card khi di chuột */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+/* Hình ảnh sách */
+.book-image {
+    width: 100%;
+    height: 350px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-image img {
+    width: 80%;
+    height: 90%;
+    object-fit: cover;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.book-card:hover .book-image img {
+    transform: scale(1.05); /* Phóng to nhẹ ảnh bìa */
+}
+
+/* Thông tin sách */
+.book-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn 2 dòng cho tiêu đề */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.8rem;
+}
+
+/* Thêm vào home.css */
+.book-title a {
+    text-decoration: none;
+    color: var(--text-color); /* Hoặc màu bạn đang dùng */
+    transition: color 0.3s;
+}
+
+.book-title a:hover {
+    color: var(--primary-color); /* Đổi màu khi di chuột vào */
+}
+
+.book-author {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.book-author span {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.book-desc {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Giới hạn 3 dòng cho mô tả */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Phần giá và nút */
+.book-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.book-price {
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 1.1rem;
+}
+
+.btn-read {
+    background-color: var(--text-main);
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-read:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+    transform: translateY(-3px);
+}

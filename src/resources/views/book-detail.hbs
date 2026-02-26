@@ -1,0 +1,116 @@
+<div class="container">
+    <div class="detail-wrapper">
+        <div class="detail-left">
+            <div class="image-box">
+                <img src="/img/{{book.image_url}}" alt="{{book.title}}">
+            </div>
+        </div>
+
+        <div class="detail-right">
+            <h1 class="book-title-detail">{{book.title}}</h1>
+            <p class="author-info">Tác giả: {{book.author}}</p>
+
+            <div class="divider"></div>
+
+            <div class="description-section">
+                <h5>Giới thiệu nội dung</h5>
+                <p class="description-text">{{book.description}}</p>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/img/{{book.pdf_url}}" class="btn-custom btn-buy" target="_blank">Đọc ngay</a>
+                <a href="/" class="btn-custom btn-back-home">Trở lại</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="review-container"
+        style="margin-top: 40px; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Đánh giá & Bình luận</h3>
+
+        {{#if user}}
+        {{#if hasReviewed}}
+        <div style="padding: 15px; background-color: #d1ecf1; color: #0c5460; border-radius: 5px; margin-bottom: 20px;">
+            Cảm ơn bạn! Bạn đã gửi đánh giá cho cuốn sách này.
+        </div>
+        {{else}}
+        <form action="/books/review" method="POST" id="reviewForm" style="margin-bottom: 30px;">
+            <input type="hidden" name="book_id" value="{{book.id}}">
+            <input type="hidden" name="rating" id="ratingValue" value="0">
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Chọn số sao:</label>
+                <div id="star-rating" style="font-size: 30px; cursor: pointer; color: #ccc;">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <small id="rating-text" style="color: #666;">(Bấm vào ngôi sao để đánh giá)</small>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Bình luận của bạn:</label>
+                <textarea id="comment-textarea" name="comment" rows="4"
+                    style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ddd; font-size: 16px;"
+                    placeholder="Viết cảm nhận của bạn tại đây..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-dark" style="padding: 10px 25px;">Gửi đánh giá</button>
+        </form>
+
+        <script>
+            const stars = document.querySelectorAll('#star-rating .star');
+            const ratingInput = document.getElementById('ratingValue');
+            const ratingText = document.getElementById('rating-text');
+
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const val = this.getAttribute('data-value');
+                    ratingInput.value = val;
+                    ratingText.innerText = `Mức độ: ${val} sao`;
+
+                    // Đổi màu vàng cho các sao đã chọn
+                    stars.forEach(s => {
+                        s.style.color = s.getAttribute('data-value') <= val ? "#f1c40f" : "#ccc";
+                    });
+                });
+            });
+
+            document.getElementById('reviewForm').onsubmit = function (e) {
+                const rating = ratingInput.value;
+                const comment = document.getElementById('comment-textarea').value.trim();
+                if (rating === "0" && comment === "") {
+                    alert("Vui lòng chọn số sao hoặc viết bình luận!");
+                    e.preventDefault();
+                }
+            };
+        </script>
+        {{/if}}
+        {{else}}
+        <div style="padding: 15px; background-color: #fff3cd; color: #856404; border-radius: 5px;">
+            Vui lòng <a href="/auth/login" style="font-weight: bold; color: #856404;">đăng nhập</a> để đánh giá.
+        </div>
+        {{/if}}
+
+        <div class="reviews-list" style="margin-top: 20px;">
+            {{#if reviews.length}}
+            {{#each reviews}}
+            <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
+                <div style="display: flex; justify-content: space-between;">
+                    <strong>{{this.name}}</strong>
+                    <span style="color: #f1c40f;">
+                        {{#if this.rating}}{{this.rating}} ⭐{{/if}}
+                    </span>
+                </div>
+                <p style="margin: 5px 0;">{{this.comment}}</p>
+                <small style="color: #999;">{{this.created_at}}</small>
+            </div>
+            {{/each}}
+            {{else}}
+            <p style="color: #999; text-align: center;">Chưa có đánh giá nào.</p>
+            {{/if}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+/* Biến màu sắc để dễ quản lý */
+:root {
+    --primary-color: #ff9800;
+    --dark-bg: rgba(33, 33, 33, 0.95);
+    --text-white: #ffffff;
+    --transition: all 0.3s ease;
+}
+
+.main-header {
+    position: fixed; /* Dính lên đầu trang */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--dark-bg);
+    backdrop-filter: blur(10px); /* Hiệu ứng mờ đục mềm mại */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    height: 70px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Logo bắt mắt hơn */
+.logo a {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-white);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.logo span {
+    color: var(--primary-color);
+}
+
+.logo a:hover {
+    transform: scale(1.05);
+}
+
+/* Nav links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin: 0;
+}
+
+.nav-item {
+    color: var(--text-white);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    transition: var(--transition);
+}
+
+/* Hiệu ứng gạch chân mềm mại khi hover */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+/* Nút bấm Đăng ký/Đăng xuất */
+.nav-btn {
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.signup {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.signup:hover {
+    background-color: #e68a00;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+    transform: translateY(-2px);
+}

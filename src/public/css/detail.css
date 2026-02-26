@@ -1,0 +1,127 @@
+    /* Tổng thể container */
+    .detail-wrapper {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        padding: 40px;
+        margin-top: 20px;
+        margin-bottom: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+
+    /* Phần bên trái: Hình ảnh sách */
+    .detail-left {
+        flex: 1;
+        min-width: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .image-box {
+        position: relative;
+        width: 100%;
+        max-width: 350px;
+        transition: transform 0.3s ease;
+    }
+
+    .image-box:hover {
+        transform: translateY(-10px);
+    }
+
+    .image-box img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        object-fit: cover;
+    }
+
+    /* Phần bên phải: Thông tin chi tiết */
+    .detail-right {
+        flex: 2;
+        min-width: 400px;
+    }
+
+    .book-title-detail {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 10px;
+        line-height: 1.2;
+    }
+
+    .author-info {
+        font-size: 1.1rem;
+        color: var(--primary-color); /* Sử dụng màu cam từ header.css */
+        margin-bottom: 25px;
+        font-weight: 600;
+    }
+
+    .divider {
+        height: 2px;
+        background: #f0f0f0;
+        margin: 20px 0;
+    }
+
+    .description-section h5 {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #444;
+    }
+
+    .description-text {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: #666;
+        text-align: justify;
+    }
+
+    .action-buttons {
+        margin-top: 35px;
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn-custom {
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 700;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-buy {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+    }
+
+    .btn-buy:hover {
+        background: #e68a00;
+        box-shadow: 0 8px 20px rgba(255, 152, 0, 0.3);
+    }
+
+    .btn-back-home {
+        background: #f8f9fa;
+        color: #777;
+        border: 1px solid #ddd;
+    }
+
+    .btn-back-home:hover {
+        background: #eee;
+    }
+
+    /* Responsive cho mobile */
+    @media (max-width: 768px) {
+        .detail-wrapper {
+            padding: 20px;
+        }
+        .detail-right {
+            min-width: 100%;
+        }
+    }

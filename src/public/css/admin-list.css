@@ -1,0 +1,79 @@
+/* Container chính */
+.admin-container {
+    margin: 30px auto;
+    padding: 0 20px;
+    max-width: 1200px;
+}
+
+/* Header trang quản lý */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-header h2 {
+    color: #333;
+    margin: 0;
+}
+
+/* Bảng dữ liệu */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.admin-table thead tr {
+    background-color: #333;
+    color: white;
+    text-align: left;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Hiệu ứng cho hàng bị xóa mềm */
+.row-deleted {
+    opacity: 0.5;
+    background-color: #f2f2f2 !important;
+}
+
+/* Badge vai trò (Admin/User) */
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-admin { background-color: #e74c3c; }
+.badge-user { background-color: #3498db; }
+
+/* Nút bấm thao tác */
+.btn-action {
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-delete.role-admin {
+    display: none !important;
+    pointer-events: none; /* Ngăn chặn việc click */
+}
+
+.btn-restore { color: #2ecc71; }
+.btn-delete { color: #e74c3c; }
+.btn-restore:hover, .btn-delete:hover { opacity: 0.7; }

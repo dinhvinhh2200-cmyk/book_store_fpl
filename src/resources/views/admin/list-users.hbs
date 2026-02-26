@@ -1,0 +1,45 @@
+<link rel="stylesheet" href="/css/admin-list.css">
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h2>Quản lý người dùng</h2>
+    </div>
+
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên người dùng</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+            <tr class="{{#if this.is_deleted}}row-deleted{{/if}}">
+                <td>{{this.id}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.email}}</td>
+                <td>
+                    <span class="badge {{#if this.isAdmin}}badge-admin{{else}}badge-user{{/if}}">
+                        {{this.role}}
+                    </span>
+                </td>
+                <td>
+                    {{#if this.is_deleted}}
+                    <form action="/admin/users/restore/{{this.id}}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-action btn-restore">Khôi phục</button>
+                    </form>
+                    {{else}}
+                    <form action="/admin/users/delete/{{this.id}}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-action btn-delete role-{{this.role}}"
+                            onclick="return confirm('Xóa người dùng này?')">Khóa</button>
+                    </form>
+                    {{/if}}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

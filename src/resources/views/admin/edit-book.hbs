@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/css/admin-form.css">
+
+<div class="container">
+    <div class="form-admin-container col-md-8 offset-md-2">
+        <h2 class="form-title">Chỉnh Sửa Sách</h2>
+
+        {{#if errorMessage}}
+        <script>
+            // Hiển thị thông báo ngay khi trang được nạp lại
+            alert("{{errorMessage}}");
+        </script>
+        {{/if}}
+
+        <form action="/admin/edit/{{book.id}}" method="POST" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label for="title">Tên sách</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{book.title}}" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="author">Tác giả</label>
+                <input type="text" class="form-control" id="author" name="author" value="{{book.author}}" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="description">Mô tả nội dung</label>
+                <textarea class="form-control" id="description" name="description"
+                    rows="5">{{book.description}}</textarea>
+            </div>
+
+            <div class="form-group mb-4">
+                <label>Ảnh hiện tại</label> <br>
+                <img src="/img/{{book.image_url}}" alt="Current Image" class="preview-img-edit">
+                <br>
+                <label for="image">Thay đổi ảnh mới (không chọn nếu muốn giữ nguyên)</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="pdf" class="form-label">Cập nhật File PDF (Để trống nếu không đổi)</label>
+                <input type="file" class="form-control" id="pdf" name="pdf" accept=".pdf">
+                {{#if book.pdf_url}}
+                <p class="mt-2">File hiện tại: <a href="/pdf/{{book.pdf_url}}" target="_blank">{{book.pdf_url}}</a></p>
+                {{/if}}
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a href="/admin" class="btn-cancel">Quay lại</a>
+                <button type="submit" class="btn-submit">Cập nhật thay đổi</button>
+            </div>
+        </form>
+    </div>
+</div>

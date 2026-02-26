@@ -1,0 +1,57 @@
+.admin-wrapper {
+    display: flex;
+    align-items: flex-start;
+    min-height: calc(100vh - 70px); /* Trừ đi chiều cao header */
+    overflow: visible;
+    background-color: #f4f7f6;
+}
+
+.admin-sidebar {
+    width: 250px;
+    background: #2d3436; /* Màu tối chuyên nghiệp */
+    color: white;
+    padding: 20px 0;
+    flex-shrink: 0;
+
+    /* Đoạn quan trọng để cố định Sidebar */
+    position: sticky;
+    position: -webkit-sticky; /* Hỗ trợ Safari */
+    top: 70px; /* Bằng với chiều cao của Header để không bị đè lên */
+    height: calc(100vh - 70px); /* Chiều cao bằng toàn bộ màn hình trừ Header */
+    z-index: 100;
+    overflow-y: auto; /* Cho phép cuộn nội dung bên trong Sidebar nếu menu quá dài */
+}
+
+.sidebar-title {
+    padding: 0 20px 20px;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 10px;
+    color: var(--primary-color); /* Màu cam chủ đạo của bạn */
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li a {
+    display: block;
+    padding: 15px 20px;
+    color: #dfe6e9;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar-menu li a:hover {
+    background: rgba(255, 152, 0, 0.2);
+    color: #ff9800;
+    padding-left: 30px; /* Hiệu ứng đẩy nhẹ khi hover */
+}
+
+.admin-content {
+    flex-grow: 1;
+    padding: 30px;
+    background: #f4f7f6;
+    min-width: 0;
+}

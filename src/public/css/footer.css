@@ -1,0 +1,31 @@
+/* Footer Styles */
+.main-footer {
+    background-color: var(--dark-bg); /* Màu nền đen xám giống Header */
+    color: var(--text-white); /* Chữ màu trắng */
+    padding: 50px 0 20px;
+    margin-top: 50px;
+    border-top: 3px solid var(--primary-color); /* Đường kẻ cam trên cùng */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.footer-section h3 {
+    color: var(--primary-color); /* Tiêu đề "Liên hệ" màu cam */
+    margin-bottom: 20px;
+}
+
+.footer-section span {
+    color: var(--primary-color); /* Chữ "STORE" màu cam */
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 30px;
+    padding-top: 20px;
+    color: #888;
+}

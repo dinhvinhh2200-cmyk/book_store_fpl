@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/admin-sidebar.css"> </head>
+<body style="padding-top: 70px;">
+    {{> header}}
+
+    <div class="admin-wrapper">
+        <aside class="admin-sidebar">
+            <div class="sidebar-title">Quản lý hệ thống</div>
+            <ul class="sidebar-menu">
+                <li><a href="/admin/users"><i class="icon">👤</i> Quản lý User</a></li>
+                <li><a href="/admin"><i class="icon">📚</i> Quản lý Sách</a></li>
+                <li><a href="/admin/reviews"><i class="icon">⭐</i> Quản lý Đánh giá</a></li>
+            </ul>
+        </aside>
+
+        <main class="admin-content">
+            {{{body}}}
+        </main>
+    </div>
+
+    {{> footer}}
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* Container chính cho bảng quản lý */
+.admin-content {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 20px;
+}
+
+/* Định dạng bảng */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th {
+    background-color: #2d3436; /* Màu đồng bộ với sidebar của bạn */
+    color: white;
+    text-align: left;
+    padding: 12px 15px;
+    font-weight: 500;
+}
+
+.table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* Trạng thái Sao */
+.rating-stars {
+    color: #f1c40f;
+    font-weight: bold;
+}
+
+/* Badge trạng thái ẩn/hiện */
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.bg-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.bg-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Nút bấm thao tác */
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-sm:hover {
+    opacity: 0.8;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+/* Giới hạn độ dài nội dung bình luận để bảng không bị quá dài */
+.comment-text {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

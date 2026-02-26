@@ -1,0 +1,77 @@
+<div class="container" style="margin-top: 30px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Quản lý danh mục sách</h2>
+        <a href="/admin/add" class="nav-btn signup" style="text-decoration: none;">+ Thêm sách mới</a>
+    </div>
+
+    {{#if errorMessage}}
+    <div class="alert alert-danger"
+        style="color: #721c24; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 12px; border-radius: 4px; margin-bottom: 20px;">
+        {{errorMessage}}
+    </div>
+    {{/if}}
+
+    <table class="table"
+        style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <thead>
+            <tr style="background-color: #333; color: white; text-align: left;">
+                <th style="padding: 15px;">ID</th>
+                <th style="padding: 15px;">Hình ảnh</th>
+                <th style="padding: 15px;">Tiêu đề</th>
+                <th style="padding: 15px;">Tác giả</th>
+                <th style="padding: 15px;">Nội dung (PDF)</th>
+                <th style="padding: 15px;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each books}}
+            <tr
+                style="{{#if this.is_deleted}}opacity: 0.6; background-color: #f9f9f9;{{/if}} border-bottom: 1px solid #eee;">
+                <td style="padding: 15px;">{{this.id}}</td>
+                <td style="padding: 15px;">
+                    <img src="/img/{{this.image_url}}"
+                        style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px; filter: {{#if this.is_deleted}}grayscale(100%){{/if}};">
+                </td>
+                <td style="padding: 15px; font-weight: 500;">{{this.title}}</td>
+                <td style="padding: 15px;">{{this.author}}</td>
+
+                <td style="padding: 15px;">
+                    {{#if this.pdf_url}}
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span
+                            style="background-color: #27ae60; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; white-space: nowrap;">
+                            Đã có PDF
+                        </span>
+                        <a href="/pdf/{{this.pdf_url}}" target="_blank" title="Xem nội dung"
+                            style="text-decoration: none; font-size: 16px;">
+                            👁️
+                        </a>
+                    </div>
+                    {{else}}
+                    <span
+                        style="background-color: #95a5a6; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; white-space: nowrap;">
+                        Chưa có
+                    </span>
+                    {{/if}}
+                </td>
+
+                <td style="padding: 15px;">
+
+                    <div style="display: flex; gap: 15px;">
+                        <a href="/admin/edit/{{this.id}}"
+                            style="color: #ff9800; text-decoration: none; font-weight: 500;">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        <a href="/admin/delete/{{this.id}}"
+                            onclick="return confirm('Bạn có chắc chắn muốn xóa cuốn sách này?')"
+                            style="color: #e74c3c; text-decoration: none; font-weight: 500;">
+                            <i class="fas fa-trash-alt"></i> Xóa
+                        </a>
+                    </div>
+
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
