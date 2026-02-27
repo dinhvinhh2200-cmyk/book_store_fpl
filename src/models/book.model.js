@@ -3,7 +3,7 @@ const db = require('../config/db')
 
 const Book = {
     getAllActive: async () => {
-        const [rows] = await db.execute('SELECT * FROM books'); 
+        const [rows] = await db.execute('SELECT * FROM books');
         return rows;
     },
 
@@ -74,6 +74,13 @@ const Book = {
         const cleanTitle = title ? title.trim() : ''
         const [rows] = await db.execute('SELECT * FROM books WHERE title = ?', [cleanTitle]);
         return rows[0]; // Trả về sách nếu tìm thấy, ngược lại là undefined
+    },
+
+    // Hàm tìm kiếm sách theo tiêu đề
+    searchByName: async (keyword) => {
+        const query = 'SELECT * FROM books WHERE title LIKE ?';
+        const [rows] = await db.execute(query, [`%${keyword}%`]);
+        return rows;
     }
 }
 module.exports = Book

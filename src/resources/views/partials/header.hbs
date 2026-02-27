@@ -4,14 +4,21 @@
             <a href="/">BOOK<span>STORE</span></a>
         </div>
 
+        <div class="search-container">
+            <form action="/" method="GET" class="search-form">
+                <input type="text" name="search" placeholder="Tìm tên sách..." value="{{keyword}}">
+                <button type="submit"><i class="fas fa-search"></i> Tìm</button>
+            </form>
+        </div>
+
         <ul class="nav-links">
             <li><a href="/" class="nav-item">Sản phẩm</a></li>
             {{#if user}}
-                <li style="color:white;" class="user-info">Chào, <strong>{{user.name}}</strong></li>
-                <li><a href="/auth/logout" class="nav-btn logout">Đăng xuất</a></li>
+            <li style="color:white;" class="user-info">Chào, <strong>{{user.name}}</strong></li>
+            <li><a href="/auth/logout" class="nav-btn logout">Đăng xuất</a></li>
             {{else}}
-                <li><a href="/auth/login" class="nav-item">Đăng nhập</a></li>
-                <li><a href="/auth/register" class="nav-btn signup">Đăng ký</a></li>
+            <li><a href="/auth/login" class="nav-item">Đăng nhập</a></li>
+            <li><a href="/auth/register" class="nav-btn signup">Đăng ký</a></li>
             {{/if}}
         </ul>
     </nav>

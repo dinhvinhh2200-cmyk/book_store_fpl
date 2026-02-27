@@ -1,10 +1,24 @@
 const Book = require('../models/book.model');
 const Review = require('../models/review.model');
 
+// Sửa lại hàm getAllBooks trong src/controllers/book.controller.js
 exports.getAllBooks = async (req, res) => {
     try {
-        const books = await Book.getAllActive();
-        res.render('home', { books });
+        const keyword = req.query.search || ''; // Lấy từ khóa từ query string (?search=abc)
+        let books;
+
+        if (keyword) {
+            // Nếu có từ khóa thì lọc theo tên
+            books = await Book.searchByName(keyword.trim());
+        } else {
+            // Nếu không có thì lấy tất cả
+            books = await Book.getAllActive();
+        }
+
+        res.render('home', {
+            books,
+            keyword // Gửi lại từ khóa để hiển thị trên thanh tìm kiếm
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Lỗi khi lấy dữ liệu sách');
@@ -22,7 +36,7 @@ exports.getAdminBooks = async (req, res) => {
         console.error(error);
         res.status(500).send('Lỗi khi lấy dữ liệu sách');
     }
-}; 
+};
 
 exports.getAddBook = (req, res) => {
     res.render('admin/add-book');
