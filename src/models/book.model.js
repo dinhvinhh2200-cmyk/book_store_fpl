@@ -81,6 +81,31 @@ const Book = {
         const query = 'SELECT * FROM books WHERE title LIKE ?';
         const [rows] = await db.execute(query, [`%${keyword}%`]);
         return rows;
+    },
+
+    // lấy tất cả danh mục để hiển thị lên giao diện 
+    getAllCategories: async () => {
+        const [rows] = await db.execute('SELECT * FROM categories');
+        return rows;
+    },
+
+    // tìm kiếm sách theo từ khóa và danh mục
+    searchByFilter: async (keyword, categoryId) => {
+        let query = 'SELECT * FROM books WHERE 1=1';
+        let params = [];
+
+        if (keyword) {
+            query += ' AND title LIKE ?';
+            params.push(`%${keyword}%`);
+        }
+
+        if (categoryId) {
+            query += ' AND category_id = ?';
+            params.push(categoryId)
+        }
+
+        const [rows] = await db.execute(query, params)
+        return rows 
     }
 }
 module.exports = Book

@@ -6,6 +6,15 @@
 
         <div class="search-container">
             <form action="/" method="GET" class="search-form">
+                <select name="category" class="category-select">
+                    <option value="">Tất cả danh mục</option>
+                    {{#each categories}}
+                    <option value="{{this.id}}" {{#if this.isSelected}}selected{{/if}}>
+                        {{this.name}}
+                    </option>
+                    {{/each}}
+                </select>
+
                 <input type="text" name="search" placeholder="Tìm tên sách..." value="{{keyword}}">
                 <button type="submit"><i class="fas fa-search"></i> Tìm</button>
             </form>

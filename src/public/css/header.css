@@ -136,3 +136,16 @@
 .search-form button:hover {
     background-color: #e03e00;
 }
+
+.category-select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-right: none;
+    background: #f8f8f8;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.search-form input {
+    border-radius: 0; /* Bỏ bo góc trái của input để khớp với select */
+}

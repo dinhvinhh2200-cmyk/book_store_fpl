@@ -4,24 +4,27 @@ const Review = require('../models/review.model');
 // Sửa lại hàm getAllBooks trong src/controllers/book.controller.js
 exports.getAllBooks = async (req, res) => {
     try {
-        const keyword = req.query.search || ''; // Lấy từ khóa từ query string (?search=abc)
-        let books;
+        const keyword = req.query.search || '';
+        const categoryId = req.query.category || '';
 
-        if (keyword) {
-            // Nếu có từ khóa thì lọc theo tên
-            books = await Book.searchByName(keyword.trim());
-        } else {
-            // Nếu không có thì lấy tất cả
-            books = await Book.getAllActive();
-        }
+        const rawCategories = await Book.getAllCategories();
+
+        // Xử lý logic so sánh ở đây thay vì dùng helper ở View
+        const categories = rawCategories.map(cat => ({
+            ...cat,
+            isSelected: String(cat.id) === String(categoryId) // Đánh dấu mục đang chọn
+        }));
+
+        const books = await Book.searchByFilter(keyword.trim(), categoryId);
 
         res.render('home', {
             books,
-            keyword // Gửi lại từ khóa để hiển thị trên thanh tìm kiếm
+            categories, // Danh sách này đã có sẵn thuộc tính isSelected
+            keyword
         });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Lỗi khi lấy dữ liệu sách');
+        res.status(500).send('Lỗi máy chủ');
     }
 };
 
