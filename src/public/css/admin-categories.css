@@ -1,0 +1,121 @@
+/* Container chính */
+.categories-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.page-title {
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 25px;
+    border-left: 5px solid #007bff;
+    padding-left: 15px;
+}
+
+/* Form thêm nhanh */
+.add-category-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.form-flex {
+    display: flex;
+    gap: 10px;
+}
+
+.input-category {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-category:focus {
+    border-color: #007bff;
+}
+
+/* Bảng danh sách */
+.table-categories {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.table-categories th {
+    background-color: #343a40;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+.table-categories td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.table-categories tr:hover {
+    background-color: #f1f4f9;
+}
+
+/* Badge số lượng hoặc trạng thái (nếu có) */
+.cat-id {
+    font-weight: bold;
+    color: #666;
+    width: 80px;
+}
+
+.cat-name {
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+/* Nút bấm */
+.btn-add {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.btn-add:hover {
+    background-color: #218838;
+}
+
+.btn-delete-cat {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.3s;
+}
+
+.btn-delete-cat:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+/* Thông báo lỗi */
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+}
