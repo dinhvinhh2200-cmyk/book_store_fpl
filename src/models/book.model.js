@@ -23,18 +23,19 @@ const Book = {
     // ham tạo mới sách
     create: async (data) => {
         // 1. Kiểm tra và lấy đúng tên biến từ Controller truyền sang
-        // Controller truyền { title, author, description, image }
+        // Bổ sung lấy category_id từ đối tượng data
         const title = data.title ? data.title.trim() : null;
         const author = data.author || null;
         const description = data.description || null;
-        const image_url = data.image || data.image_url || null; // Chấp nhận cả image hoặc image_url
+        const image_url = data.image || data.image_url || null;
         const pdf_url = data.pdf_url || null;
+        const category_id = data.category_id || null; // Lấy category_id
 
-        // 2. Sửa lại câu lệnh SQL (Chữ INSERT viết đúng chuẩn)
-        const query = 'INSERT INTO books (title, author, description, image_url, pdf_url) VALUES (?, ?, ?, ?, ?)';
+        // 2. Cập nhật câu lệnh SQL để thêm cột category_id
+        const query = 'INSERT INTO books (title, author, description, image_url, pdf_url, category_id) VALUES (?, ?, ?, ?, ?, ?)';
 
-        // 3. Thực thi với mảng các giá trị chắc chắn không bị undefined
-        return await db.execute(query, [title, author, description, image_url, pdf_url]);
+        // 3. Thực thi với mảng các giá trị bao gồm category_id
+        return await db.execute(query, [title, author, description, image_url, pdf_url, category_id]);
     },
 
     getById: async (id) => {
@@ -105,7 +106,7 @@ const Book = {
         }
 
         const [rows] = await db.execute(query, params)
-        return rows 
+        return rows
     }
 }
 module.exports = Book

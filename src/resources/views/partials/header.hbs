@@ -5,8 +5,9 @@
         </div>
 
         <div class="search-container">
-            <form action="/" method="GET" class="search-form">
-                <select name="category" class="category-select">
+            <form action="/" method="GET" class="search-form" id="searchForm">
+                <select name="category" class="category-select"
+                    onchange="document.getElementById('searchForm').submit()">
                     <option value="">Tất cả danh mục</option>
                     {{#each categories}}
                     <option value="{{this.id}}" {{#if this.isSelected}}selected{{/if}}>

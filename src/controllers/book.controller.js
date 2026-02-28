@@ -41,37 +41,37 @@ exports.getAdminBooks = async (req, res) => {
     }
 };
 
-exports.getAddBook = (req, res) => {
-    res.render('admin/add-book');
+// Cập nhật hàm getAddBook để truyền danh mục sang view
+exports.getAddBook = async (req, res) => {
+    try {
+        const categories = await Book.getAllCategories();
+        res.render('admin/add-book', { layout: 'admin', categories });
+    } catch (error) {
+        res.status(500).send('Lỗi tải trang thêm sách');
+    }
 };
 
 // SỬA TẠI ĐÂY: Đổi 'export const' thành 'exports.postAddBook'
+// Cập nhật hàm postAddBook để nhận category_id
 exports.postAddBook = async (req, res) => {
     try {
-        const title = req.body.title ? req.body.title.trim() : '';
-        const { author, description } = req.body;
+        const { title, author, description, category_id } = req.body; // Lấy category_id ở đây
+        const cleanTitle = title ? title.trim() : '';
 
-        // Kiểm tra trùng tên
-        const existingBook = await Book.findByName(title);
-        if (existingBook) {
-            // Render lại trang add-book kèm thông báo lỗi
-            return res.render('admin/add-book', {
-                layout: 'admin',
-                errorMessage: 'Tiêu đề sách này đã tồn tại!',
-                oldData: { ...req.body, title } // Giữ lại dữ liệu đã nhập để người dùng không phải viết lại
-            });
-        }
-
-        // ... logic Multer lấy file ...
+        // Logic kiểm tra trùng tên...
+        
         const image = req.files['image'] ? req.files['image'][0].filename : '';
         const pdf_url = req.files['pdf'] ? req.files['pdf'][0].filename : '';
 
-        await Book.create({ title, author, description, image, pdf_url });
+        // Truyền category_id vào hàm create
+        await Book.create({ title: cleanTitle, author, description, image, pdf_url, category_id });
         res.redirect('/admin');
     } catch (error) {
+        console.error(error);
         res.status(500).send('Lỗi máy chủ');
     }
 };
+
 
 // Thay thế postSoftDelete và xóa bỏ postRestore
 exports.deleteBook = async (req, res) => {
