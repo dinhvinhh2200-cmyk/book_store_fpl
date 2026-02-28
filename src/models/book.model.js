@@ -8,9 +8,15 @@ const Book = {
     },
 
     // lay sach cho trang admin
+    // Cập nhật hàm getAllForAdmin trong src/models/book.model.js
     getAllForAdmin: async () => {
-        const [rows] = await db.execute('SELECT * FROM books')
-        return rows
+        const query = `
+        SELECT books.*, categories.name AS category_name 
+        FROM books 
+        LEFT JOIN categories ON books.category_id = categories.id
+    `;
+        const [rows] = await db.execute(query);
+        return rows;
     },
 
     // Hàm xóa vĩnh viễn sách khỏi database
@@ -48,11 +54,12 @@ const Book = {
         const author = data.author || null;
         const description = data.description || null;
         const image_url = data.image_url || null;
-        const pdf_url = data.pdf_url || null; // Lấy thêm trường này từ data
+        const pdf_url = data.pdf_url || null;
+        const category_id = data.category_id || null; // Nhận category_id từ controller
 
-        // Thêm pdf_url vào câu lệnh UPDATE
-        const query = 'UPDATE books SET title = ?, author = ?, description = ?, image_url = ?, pdf_url = ? WHERE id = ?';
-        return await db.execute(query, [title, author, description, image_url, pdf_url, id]);
+        // Cập nhật câu lệnh SQL thêm trường category_id
+        const query = 'UPDATE books SET title = ?, author = ?, description = ?, image_url = ?, pdf_url = ?, category_id = ? WHERE id = ?';
+        return await db.execute(query, [title, author, description, image_url, pdf_url, category_id, id]);
     },
 
     async getBookById(id) {

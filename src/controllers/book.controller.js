@@ -59,7 +59,7 @@ exports.postAddBook = async (req, res) => {
         const cleanTitle = title ? title.trim() : '';
 
         // Logic kiểm tra trùng tên...
-        
+
         const image = req.files['image'] ? req.files['image'][0].filename : '';
         const pdf_url = req.files['pdf'] ? req.files['pdf'][0].filename : '';
 
@@ -104,7 +104,19 @@ exports.deleteBook = async (req, res) => {
 exports.getEditBook = async (req, res) => {
     try {
         const book = await Book.getById(req.params.id);
-        res.render('admin/edit-book', { book, layout: 'admin' });
+        const rawCategories = await Book.getAllCategories(); // Lấy tất cả danh mục
+
+        // Đánh dấu danh mục hiện tại của sách để hiển thị "selected" trong dropdown
+        const categories = rawCategories.map(cat => ({
+            ...cat,
+            isSelected: Number(cat.id) === Number(book.category_id)
+        }));
+
+        res.render('admin/edit-book', {
+            book,
+            categories, // Truyền danh sách danh mục sang view
+            layout: 'admin'
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Lỗi khi lấy thông tin sách');
@@ -114,17 +126,17 @@ exports.getEditBook = async (req, res) => {
 exports.postEditBook = async (req, res) => {
     try {
         const { id } = req.params;
+        const { author, description, category_id } = req.body; // Lấy thêm category_id
         const title = req.body.title ? req.body.title.trim() : '';
-        const { author, description } = req.body;
 
-        // 1. Kiểm tra xem tiêu đề mới có trùng với sách khác không
         const duplicateBook = await Book.findByNameExcludingId(title, id);
         if (duplicateBook) {
-            // Lấy lại thông tin sách hiện tại để hiển thị lại form
             const book = await Book.getById(id);
+            const categories = await Book.getAllCategories();
             return res.render('admin/edit-book', {
                 layout: 'admin',
-                book: { ...book, title, author, description }, // Giữ lại các giá trị user vừa nhập sai
+                book: { ...book, title, author, description, category_id },
+                categories,
                 errorMessage: 'Tiêu đề sách này đã được sử dụng bởi một sách khác!'
             });
         }
@@ -133,8 +145,8 @@ exports.postEditBook = async (req, res) => {
         const image_url = (req.files && req.files['image']) ? req.files['image'][0].filename : book.image_url;
         const pdf_url = (req.files && req.files['pdf']) ? req.files['pdf'][0].filename : book.pdf_url;
 
-        // 2. Cập nhật vào database
-        await Book.update(id, { title, author, description, image_url, pdf_url });
+        // Cập nhật vào database bao gồm cả category_id
+        await Book.update(id, { title, author, description, image_url, pdf_url, category_id });
         res.redirect('/admin');
     } catch (error) {
         console.error(error);

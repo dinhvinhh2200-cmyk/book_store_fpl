@@ -10,6 +10,7 @@ const bookRoutes = require('./routes/book.route');
 const authRouter = require('./routes/auth.route')
 const authMiddleware = require('./middlewares/auth.middleware')
 const userRoutes = require('./routes/user.route');
+const categoryRoutes = require('./routes/category.route');
 
 let multer = require('multer')
 let storage = multer.diskStorage({
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', bookRoutes);
 app.use('/auth', authRouter)
 app.use('/', userRoutes); 
+app.use('/admin/categories', categoryRoutes);
 
 
 
