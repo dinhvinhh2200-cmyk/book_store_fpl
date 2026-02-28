@@ -1,21 +1,18 @@
 <link rel="stylesheet" href="/css/admin-categories.css">
 
-<div class="container mt-4">
-    <h2>Quản lý danh mục</h2>
+<div class="categories-container mt-4">
+    <h2 class="page-title">Quản lý danh mục</h2> {{#if errorMessage}}
+    <div class="alert-error">{{errorMessage}}</div> {{/if}}
 
-    {{#if errorMessage}}
-        <div class="alert alert-danger">{{errorMessage}}</div>
-    {{/if}}
-
-    <form action="/admin/categories/add" method="POST" class="mb-4 d-flex">
-        <input type="text" name="name" class="form-control me-2" placeholder="Tên danh mục mới" required>
-        <button type="submit" class="btn btn-primary">Thêm</button>
+    <form action="/admin/categories/add" method="POST" class="add-category-form mb-4 form-flex">
+        <input type="text" name="name" class="input-category" placeholder="Tên danh mục mới" required> <button
+            type="submit" class="btn-add">Thêm</button>
     </form>
 
-    <table class="table table-bordered">
+    <table class="table-categories">
         <thead>
             <tr>
-                <th>ID</th>
+                <th class="cat-id">ID</th>
                 <th>Tên danh mục</th>
                 <th>Hành động</th>
             </tr>
@@ -23,12 +20,11 @@
         <tbody>
             {{#each categories}}
             <tr>
-                <td>{{this.id}}</td>
-                <td>{{this.name}}</td>
+                <td class="cat-id">{{this.id}}</td>
+                <td class="cat-name">{{this.name}}</td>
                 <td>
-                    <a href="/admin/categories/delete/{{this.id}}" 
-                       class="btn btn-danger btn-sm" 
-                       onclick="return confirm('Xác nhận xóa danh mục?')">Xóa</a>
+                    <a href="/admin/categories/delete/{{this.id}}" class="btn-delete-cat"
+                        onclick="return confirm('Xác nhận xóa danh mục?')">Xóa</a>
                 </td>
             </tr>
             {{/each}}
