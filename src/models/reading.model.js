@@ -14,6 +14,14 @@ const Reading = {
             [userId, bookId]
         );
         return rows.length > 0;
+    },
+
+    hasAnyRead: async (bookId) => {
+        const [rows] = await db.execute(
+            'SELECT id FROM reading_history WHERE book_id = ? LIMIT 1',
+            [bookId]
+        );
+        return rows.length > 0;
     }
 };
 

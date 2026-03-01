@@ -20,7 +20,7 @@
                 <th style="padding: 15px;">Tiêu đề</th>
                 <th style="padding: 15px;">Tác giả</th>
                 <th style="padding: 15px;">Danh mục</th>
-                <th style="padding: 15px;">Nội dung (PDF)</th>
+                <th style="padding: 15px;">Trạng thái</th>
                 <th style="padding: 15px;">Thao tác</th>
             </tr>
         </thead>
@@ -38,46 +38,54 @@
 
                 <td>
                     {{#if this.category_name}}
-                    <span class="badge bg-info">{{this.category_name}}</span>
+                    <span class="badge bg-info"
+                        style="background-color: #17a2b8; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px;">
+                        {{this.category_name}}
+                    </span>
                     {{else}}
                     <span class="text-muted">Chưa phân loại</span>
                     {{/if}}
                 </td>
 
                 <td style="padding: 15px;">
-                    {{#if this.pdf_url}}
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span
-                            style="background-color: #27ae60; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; white-space: nowrap;">
-                            Đã có PDF
-                        </span>
-                        <a href="/pdf/{{this.pdf_url}}" target="_blank" title="Xem nội dung"
-                            style="text-decoration: none; font-size: 16px;">
-                            👁️
-                        </a>
-                    </div>
+                    {{#if this.is_deleted}}
+                    <span style="color: #e74c3c; font-weight: bold;">🚫 Ngừng phục vụ</span>
                     {{else}}
-                    <span
-                        style="background-color: #95a5a6; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px; white-space: nowrap;">
-                        Chưa có
-                    </span>
+                    <span style="color: #27ae60; font-weight: bold;">✅ Đang kinh doanh</span>
                     {{/if}}
                 </td>
 
                 <td style="padding: 15px;">
-
-                    <div style="display: flex; gap: 15px;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
                         <a href="/admin/edit/{{this.id}}"
-                            style="color: #ff9800; text-decoration: none; font-weight: 500;">
-                            <i class="fas fa-edit"></i> Sửa
-                        </a>
-                        <a href="/admin/delete/{{this.id}}"
-                            onclick="return confirm('Bạn có chắc chắn muốn xóa cuốn sách này?')"
-                            style="color: #e74c3c; text-decoration: none; font-weight: 500;">
-                            <i class="fas fa-trash-alt"></i> Xóa
-                        </a>
-                    </div>
+                            style="color: #ff9800; text-decoration: none; font-size: 18px;">✏️</a>
 
+                        {{#if this.is_deleted}}
+                        <form action="/admin/books/restore/{{this.id}}" method="POST" style="margin: 0;">
+                            <button type="submit" title="Hiện lại sách"
+                                onclick="return confirm('Bạn muốn hiển thị lại sách này?')"
+                                style="background: none; border: none; cursor: pointer; color: #27ae60; font-size: 18px;">
+                                ✅
+                            </button>
+                        </form>
+                        {{else}}
+                        <form action="/admin/books/stop/{{this.id}}" method="POST" style="margin: 0;">
+                            <button type="submit" title="Ngừng phục vụ"
+                                onclick="return confirm('Bạn có chắc muốn ẩn sách này?')"
+                                style="background: none; border: none; cursor: pointer; color: #e74c3c; font-size: 18px;">
+                                🚫
+                            </button>
+                        </form>
+                        {{/if}}
+
+                        <form action="/admin/books/delete/{{this.id}}" method="POST" style="margin: 0;">
+                            <button type="submit" title="Xóa vĩnh viễn"
+                                onclick="return confirm('Xóa vĩnh viễn? Điều kiện: Sách chưa có người đọc/bình luận.')"
+                                style="background: none; border: none; cursor: pointer; color: #333; font-size: 18px;">
+                                🗑️
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             {{/each}}

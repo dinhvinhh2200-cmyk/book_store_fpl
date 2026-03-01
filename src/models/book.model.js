@@ -3,8 +3,14 @@ const db = require('../config/db')
 
 const Book = {
     getAllActive: async () => {
-        const [rows] = await db.execute('SELECT * FROM books');
+        const [rows] = await db.execute('SELECT * FROM books WHERE is_deleted = 0');
         return rows;
+    },
+
+    // Hàm ngừng phục vụ (ẩn sách)
+    softDelete: async (id) => {
+        const query = 'UPDATE books SET is_deleted = 1 WHERE id = ?';
+        return await db.execute(query, [id]);
     },
 
     // lay sach cho trang admin
@@ -99,7 +105,8 @@ const Book = {
 
     // tìm kiếm sách theo từ khóa và danh mục
     searchByFilter: async (keyword, categoryId) => {
-        let query = 'SELECT * FROM books WHERE 1=1';
+        // Thêm điều kiện is_deleted = 0 vào ngay từ đầu
+        let query = 'SELECT * FROM books WHERE is_deleted = 0';
         let params = [];
 
         if (keyword) {
@@ -109,11 +116,17 @@ const Book = {
 
         if (categoryId) {
             query += ' AND category_id = ?';
-            params.push(categoryId)
+            params.push(categoryId);
         }
 
-        const [rows] = await db.execute(query, params)
-        return rows
+        const [rows] = await db.execute(query, params);
+        return rows;
+    },
+
+    // 2. THÊM MỚI: Hàm phục hồi sách (Hiện lại)
+    restore: async (id) => {
+        const query = 'UPDATE books SET is_deleted = 0 WHERE id = ?';
+        return await db.execute(query, [id]);
     }
 }
 module.exports = Book

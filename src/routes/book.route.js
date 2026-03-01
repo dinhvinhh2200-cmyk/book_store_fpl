@@ -59,9 +59,15 @@ router.post('/admin/edit/:id', upload.fields([
     { name: 'pdf', maxCount: 1 }
 ]), bookController.postEditBook);
 
-// Xóa và Khôi phục sách (Soft Delete)
-router.get('/admin/delete/:id', verifyToken, isAdmin, bookController.deleteBook);
+// 1. Route Ngừng phục vụ (Ẩn sách)
+router.post('/admin/books/stop/:id', verifyToken, isAdmin, bookController.stopServiceBook);
+
+// 2. Route Xóa vĩnh viễn (Xóa cứng)
+router.post('/admin/books/delete/:id', verifyToken, isAdmin, bookController.deleteBook);
 
 router.get('/books/read/:id', authMiddleware.verifyToken, bookController.readBook);
+
+// Phục hồi sách (Hiện lại)
+router.post('/admin/books/restore/:id', verifyToken, isAdmin, bookController.restoreBook);
 
 module.exports = router;
