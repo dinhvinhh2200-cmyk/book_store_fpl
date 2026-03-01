@@ -23,6 +23,9 @@
                 <td class="cat-id">{{this.id}}</td>
                 <td class="cat-name">{{this.name}}</td>
                 <td>
+                    <a href="/admin/categories/edit/{{this.id}}" class="btn-add"
+                        style="text-decoration: none; padding: 5px 10px; font-size: 0.8rem; background-color: #ffc107;">Sửa</a>
+
                     <a href="/admin/categories/delete/{{this.id}}" class="btn-delete-cat"
                         onclick="return confirm('Xác nhận xóa danh mục?')">Xóa</a>
                 </td>

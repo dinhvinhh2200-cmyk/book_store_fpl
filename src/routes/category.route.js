@@ -9,5 +9,7 @@ router.use(verifyToken, isAdmin);
 router.get('/', categoryController.listCategories);
 router.post('/add', categoryController.addCategory);
 router.get('/delete/:id', categoryController.deleteCategory);
+router.get('/edit/:id', categoryController.editCategory); // Đường dẫn hiện form
+router.post('/edit/:id', categoryController.updateCategory); // Đường dẫn xử lý submit
 
 module.exports = router;

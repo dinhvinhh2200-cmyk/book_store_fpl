@@ -62,9 +62,8 @@ app.listen(port, () => {
     console.log(`Ứng dụng đang chạy tại http://localhost:${port}`);
 });
 
+// sửa lại chỗ không được thêm danh mục trùng tên đã có 
+// thêm phần sửa cho quản lý danh mục 
+// fix lại chỗ chỉ phải đọc rồi mới được đánh giá 
+// fix lại chỗ require html 
 
-//  sửa lại phần đánh giá chỗ ngôi sao (đã hoàn thành)
-// sửa phần khoảng trắng sửa với thêm khi có trùng title (đã hoàn thành)
-// thêm phần lọc sách theo tìm ký tự 
-// sửa phần admin không có xóa mền (đã hoàn thành)
-// sửa phần sách vẫn có thể xóa cứng delete được trong trường hợp không có đánh giá  (đã hoàn thành)

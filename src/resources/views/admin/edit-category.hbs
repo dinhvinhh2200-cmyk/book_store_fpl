@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/css/admin-categories.css">
+
+<div class="categories-container mt-4">
+    <h2 class="page-title">Chỉnh sửa danh mục</h2>
+
+    {{#if errorMessage}}
+    <div class="alert-error">{{errorMessage}}</div>
+    {{/if}}
+
+    <div class="add-category-form">
+        <form action="/admin/categories/edit/{{category.id}}" method="POST" class="form-flex">
+            <input type="text" name="name" class="input-category" value="{{category.name}}" placeholder="Tên danh mục"
+                required>
+            <button type="submit" class="btn-add">Cập nhật</button>
+            <a href="/admin/categories" class="btn-delete-cat" style="background-color: #6c757d;">Hủy</a>
+        </form>
+    </div>
+</div>
