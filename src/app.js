@@ -51,6 +51,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
 app.use('/', bookRoutes);
 app.use('/auth', authRouter)
 app.use('/', userRoutes); 

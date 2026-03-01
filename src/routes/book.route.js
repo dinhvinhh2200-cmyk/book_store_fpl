@@ -11,12 +11,16 @@ const reviewController = require('../controllers/review.controller');
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const authMiddleware = require('../middlewares/auth.middleware');
 
-// Cấu hình Multer để lưu trữ ảnh
+// THAY BẰNG ĐOẠN NÀY (Copy logic từ app.js sang để đảm bảo phân loại):
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../public/img'));
+    destination: function (req, file, cb) {
+        if (file.mimetype === 'application/pdf') {
+            cb(null, path.join(__dirname, '../public/pdf')); // Lưu vào public/pdf
+        } else {
+            cb(null, path.join(__dirname, '../public/img')); // Lưu vào public/img
+        }
     },
-    filename: (req, file, cb) => {
+    filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
@@ -44,14 +48,14 @@ router.get('/admin', verifyToken, isAdmin, bookController.getAdminBooks);
 // Thêm sách mới
 router.get('/admin/add', verifyToken, isAdmin, bookController.getAddBook);
 router.post('/admin/add', upload.fields([
-    { name: 'image', maxCount: 1 }, 
+    { name: 'image', maxCount: 1 },
     { name: 'pdf', maxCount: 1 }
 ]), bookController.postAddBook);
 
 // Chỉnh sửa sách
 router.get('/admin/edit/:id', verifyToken, isAdmin, bookController.getEditBook);
 router.post('/admin/edit/:id', upload.fields([
-    { name: 'image', maxCount: 1 }, 
+    { name: 'image', maxCount: 1 },
     { name: 'pdf', maxCount: 1 }
 ]), bookController.postEditBook);
 
