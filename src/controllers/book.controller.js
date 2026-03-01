@@ -175,26 +175,38 @@ exports.postEditBook = async (req, res) => {
 
 exports.getBookDetail = async (req, res) => {
     try {
-        const book = await Book.getBookById(req.params.id);
-        const reviews = await Review.getByBookIdActive(book.id);
+        const bookId = req.params.id;
+        const book = await Book.getBookById(bookId);
 
-        let hasReviewed = false;
-        let canReview = false; // Biến mới để kiểm tra quyền đánh giá
-
-        if (req.user) {
-            hasReviewed = await Review.checkExistingReview(book.id, req.user.id);
-            // Kiểm tra xem đã đọc chưa
-            canReview = await Reading.hasRead(req.user.id, book.id);
+        if (!book) {
+            return res.status(404).send('Không tìm thấy sách');
         }
 
+        const reviews = await Review.getByBookIdActive(bookId);
+
+        let hasReviewed = false;
+        let canReview = false; // Mặc định là không được đánh giá
+
+        // Kiểm tra quyền nếu người dùng đã đăng nhập
+        if (req.user) {
+            // 1. Kiểm tra xem đã đánh giá chưa
+            hasReviewed = await Review.checkExistingReview(bookId, req.user.id);
+
+            // 2. Kiểm tra xem đã có lịch sử "Đọc" trong Database chưa
+            canReview = await Reading.hasRead(req.user.id, bookId);
+        }
+
+        // Truyền đầy đủ các biến sang View
         res.render('book-detail', {
             book,
             reviews,
             hasReviewed,
-            canReview, // Truyền biến này sang View
+            canReview, // Biến này cực kỳ quan trọng để file .hbs không bị lỗi
+            title: book.title,
             user: req.user
         });
     } catch (error) {
-        res.status(500).send('Lỗi máy chủ');
+        console.error("Lỗi getBookDetail:", error);
+        res.status(500).send('Lỗi máy chủ: ' + error.message);
     }
 };
