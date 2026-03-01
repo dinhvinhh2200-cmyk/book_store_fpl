@@ -5,7 +5,6 @@ const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
 const reviewController = require('../controllers/review.controller');
 
 router.get('/admin/reviews', isAdmin, reviewController.getAdminReviews);
-router.post('/admin/reviews/toggle', isAdmin, reviewController.postToggleReview);
 
 // Áp dụng middleware bảo vệ: Chỉ Admin mới có quyền truy cập các route này
 router.use(verifyToken, isAdmin);
