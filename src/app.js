@@ -64,6 +64,5 @@ app.listen(port, () => {
 });
 
 
-// fix lại chỗ chỉ phải đọc rồi mới được đánh giá 
-// fix lại chỗ require html 
+// nhiệm vụ fix lại chỗ quản lý đánh giá bỏ đi phần ẩn hiện đánh giá 
 
