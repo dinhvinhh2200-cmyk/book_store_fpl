@@ -50,15 +50,3 @@ exports.getAdminReviews = async (req, res) => {
         res.status(500).send('Lỗi lấy danh sách bình luận');
     }
 };
-
-exports.postToggleReview = async (req, res) => {
-    try {
-        const { id, status } = req.body;
-        // Chuyển đổi status sang số (0 hoặc 1) để lưu vào database
-        await Review.toggleVisibility(id, parseInt(status));
-        res.redirect('/admin/reviews');
-    } catch (error) {
-        console.error("Lỗi toggleReview:", error);
-        res.status(500).send('Lỗi cập nhật trạng thái hiển thị');
-    }
-};

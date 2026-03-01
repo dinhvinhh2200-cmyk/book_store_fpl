@@ -9,8 +9,6 @@
                 <th>Sách</th>
                 <th>Nội dung</th>
                 <th>Đánh giá</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
@@ -20,25 +18,6 @@
                 <td>{{this.book_title}}</td>
                 <td>{{this.comment}}</td>
                 <td>{{this.rating}} ⭐</td>
-                <td>
-                    {{#if this.is_hidden}}
-                        <span class="badge bg-danger">Đang ẩn</span>
-                    {{else}}
-                        <span class="badge bg-success">Hiển thị</span>
-                    {{/if}}
-                </td>
-                <td>
-                    <form action="/admin/reviews/toggle" method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="{{this.id}}">
-                        {{#if this.is_hidden}}
-                            <input type="hidden" name="status" value="0">
-                            <button type="submit" class="btn btn-sm btn-primary">Hiện</button>
-                        {{else}}
-                            <input type="hidden" name="status" value="1">
-                            <button type="submit" class="btn btn-sm btn-warning">Ẩn đi</button>
-                        {{/if}}
-                    </form>
-                </td>
             </tr>
             {{/each}}
         </tbody>
