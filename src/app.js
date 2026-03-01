@@ -64,5 +64,4 @@ app.listen(port, () => {
 });
 
 
-// nhiệm vụ fix lại chỗ quản lý đánh giá bỏ đi phần ẩn hiện đánh giá 
 
