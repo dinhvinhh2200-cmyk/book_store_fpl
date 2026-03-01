@@ -9,6 +9,7 @@ const reviewController = require('../controllers/review.controller');
 
 // Import Middlewares
 const { verifyToken, isAdmin } = require('../middlewares/auth.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
 
 // Cấu hình Multer để lưu trữ ảnh
 const storage = multer.diskStorage({
@@ -56,5 +57,7 @@ router.post('/admin/edit/:id', upload.fields([
 
 // Xóa và Khôi phục sách (Soft Delete)
 router.get('/admin/delete/:id', verifyToken, isAdmin, bookController.deleteBook);
+
+router.get('/books/read/:id', authMiddleware.verifyToken, bookController.readBook);
 
 module.exports = router;

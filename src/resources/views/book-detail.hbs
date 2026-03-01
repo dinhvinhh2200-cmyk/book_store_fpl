@@ -18,7 +18,8 @@
             </div>
 
             <div class="action-buttons">
-                <a href="/img/{{book.pdf_url}}" class="btn-custom btn-buy" target="_blank">Đọc ngay</a>
+                {{!-- SỬA TẠI ĐÂY: Chuyển hướng qua route xử lý đọc để ghi nhận lịch sử --}}
+                <a href="/books/read/{{book.id}}" class="btn-custom btn-buy" target="_blank">Đọc ngay</a>
                 <a href="/" class="btn-custom btn-back-home">Trở lại</a>
             </div>
         </div>
@@ -29,6 +30,8 @@
         <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Đánh giá & Bình luận</h3>
 
         {{#if user}}
+        {{!-- KIỂM TRA QUYỀN ĐÁNH GIÁ --}}
+        {{#if canReview}}
         {{#if hasReviewed}}
         <div style="padding: 15px; background-color: #d1ecf1; color: #0c5460; border-radius: 5px; margin-bottom: 20px;">
             Cảm ơn bạn! Bạn đã gửi đánh giá cho cuốn sách này.
@@ -59,34 +62,14 @@
 
             <button type="submit" class="btn btn-dark" style="padding: 10px 25px;">Gửi đánh giá</button>
         </form>
-
-        <script>
-            const stars = document.querySelectorAll('#star-rating .star');
-            const ratingInput = document.getElementById('ratingValue');
-            const ratingText = document.getElementById('rating-text');
-
-            stars.forEach(star => {
-                star.addEventListener('click', function () {
-                    const val = this.getAttribute('data-value');
-                    ratingInput.value = val;
-                    ratingText.innerText = `Mức độ: ${val} sao`;
-
-                    // Đổi màu vàng cho các sao đã chọn
-                    stars.forEach(s => {
-                        s.style.color = s.getAttribute('data-value') <= val ? "#f1c40f" : "#ccc";
-                    });
-                });
-            });
-
-            document.getElementById('reviewForm').onsubmit = function (e) {
-                const rating = ratingInput.value;
-                const comment = document.getElementById('comment-textarea').value.trim();
-                if (rating === "0" && comment === "") {
-                    alert("Vui lòng chọn số sao hoặc viết bình luận!");
-                    e.preventDefault();
-                }
-            };
-        </script>
+        {{/if}}
+        {{else}}
+        {{!-- THÔNG BÁO NẾU CHƯA ĐỌC SÁCH --}}
+        <div style="padding: 15px; background-color: #fff3cd; color: #856404; border-radius: 5px; margin-bottom: 20px;">
+            Bạn cần <strong>đọc sách</strong> này trước khi có thể để lại đánh giá.
+            <a href="/books/read/{{book.id}}" target="_blank" style="text-decoration: underline; color: #856404;">Đọc
+                ngay tại đây</a>.
+        </div>
         {{/if}}
         {{else}}
         <div style="padding: 15px; background-color: #fff3cd; color: #856404; border-radius: 5px;">
@@ -94,6 +77,7 @@
         </div>
         {{/if}}
 
+        {{!-- Danh sách đánh giá giữ nguyên --}}
         <div class="reviews-list" style="margin-top: 20px;">
             {{#if reviews.length}}
             {{#each reviews}}
@@ -114,3 +98,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Giữ nguyên đoạn mã Script xử lý sao đánh giá của bạn
+    const stars = document.querySelectorAll('#star-rating .star');
+    const ratingInput = document.getElementById('ratingValue');
+    const ratingText = document.getElementById('rating-text');
+
+    if (stars.length > 0) {
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const val = this.getAttribute('data-value');
+                ratingInput.value = val;
+                ratingText.innerText = `Mức độ: ${val} sao`;
+                stars.forEach(s => {
+                    s.style.color = s.getAttribute('data-value') <= val ? "#f1c40f" : "#ccc";
+                });
+            });
+        });
+    }
+
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+        reviewForm.onsubmit = function (e) {
+            const rating = ratingInput.value;
+            const comment = document.getElementById('comment-textarea').value.trim();
+            if (rating === "0" && comment === "") {
+                alert("Vui lòng chọn số sao hoặc viết bình luận!");
+                e.preventDefault();
+            }
+        };
+    }
+</script>

@@ -1,5 +1,24 @@
 const Book = require('../models/book.model');
 const Review = require('../models/review.model');
+const Reading = require('../models/reading.model');
+
+exports.readBook = async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const userId = req.user.id;
+
+        // Lưu vào lịch sử đọc
+        await Reading.addToHistory(userId, bookId);
+
+        // Lấy thông tin sách để lấy pdf_url
+        const book = await Book.getById(bookId);
+
+        // Chuyển hướng đến file PDF thực tế
+        res.redirect(`/pdf/${book.pdf_url}`);
+    } catch (error) {
+        res.status(500).send('Lỗi khi mở sách');
+    }
+};
 
 // Sửa lại hàm getAllBooks trong src/controllers/book.controller.js
 exports.getAllBooks = async (req, res) => {
@@ -157,27 +176,25 @@ exports.postEditBook = async (req, res) => {
 exports.getBookDetail = async (req, res) => {
     try {
         const book = await Book.getBookById(req.params.id);
-        if (!book) {
-            return res.status(404).send('Không tìm thấy sách');
-        }
-
-        const bookId = book.id;
-        const reviews = await Review.getByBookIdActive(bookId);
+        const reviews = await Review.getByBookIdActive(book.id);
 
         let hasReviewed = false;
+        let canReview = false; // Biến mới để kiểm tra quyền đánh giá
+
         if (req.user) {
-            hasReviewed = await Review.checkExistingReview(bookId, req.user.id);
+            hasReviewed = await Review.checkExistingReview(book.id, req.user.id);
+            // Kiểm tra xem đã đọc chưa
+            canReview = await Reading.hasRead(req.user.id, book.id);
         }
 
         res.render('book-detail', {
             book,
             reviews,
             hasReviewed,
-            title: book.title,
+            canReview, // Truyền biến này sang View
             user: req.user
         });
     } catch (error) {
-        console.error("Lỗi getBookDetail:", error);
-        res.status(500).send(error.message);
+        res.status(500).send('Lỗi máy chủ');
     }
 };

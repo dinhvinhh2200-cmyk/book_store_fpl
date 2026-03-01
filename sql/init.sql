@@ -45,6 +45,16 @@ CREATE TABLE IF NOT EXISTS reviews (
     UNIQUE KEY unique_user_book_review (book_id, user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS reading_history (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    book_id INT NOT NULL,
+    read_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (book_id) REFERENCES books(id),
+    UNIQUE KEY unique_user_book_read (user_id, book_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- 5. Chèn dữ liệu danh mục trước
 INSERT INTO categories (name) VALUES ('Văn học'), ('Kinh tế'), ('Kỹ năng sống'), ('Công nghệ');
 
