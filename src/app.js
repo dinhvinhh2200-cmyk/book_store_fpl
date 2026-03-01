@@ -62,8 +62,7 @@ app.listen(port, () => {
     console.log(`Ứng dụng đang chạy tại http://localhost:${port}`);
 });
 
-// sửa lại chỗ không được thêm danh mục trùng tên đã có 
-// thêm phần sửa cho quản lý danh mục 
+
 // fix lại chỗ chỉ phải đọc rồi mới được đánh giá 
 // fix lại chỗ require html 
 
